@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>popup</title>
+	<script src="../ADS.js"></script>
+	<script>
+		function popup(url){
+			window.open(url);
+		};
+		ADS.addEvent(window, 'load', function(e){
+			// var popups = ADS.getElementsByClassName('popup', 'a');
+			// for(var i = 0; i < popups.length; i++){
+			// 	ADS.addEvent(popups[i], 'click', function(e){
+			// 		window.open(this.href);
+			// 		ADS.eventPreventDefault(e);
+			// 	});
+			// }
+			console.log("for test~");
+			var popup = document.getElementsByClassName('popup');
+			ADS.addEvent(popup, 'click', function(e){
+				e.preventDeafult();
+				alert(popup.text);
+			});
+		});
+	</script>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+		body{
+			font: 62.5% "Lucida Grande", Lucida, Verdana, sans-serif;
+		}
+		code{
+			font: 1em "Courier New", Courier, mono;
+		}
+		h1{
+			padding: .25em;
+			margin: 0;
+			margin-bottom: 1em;
+			background: gray;
+			color: white;
+		}
+		dl{
+			padding: 2em;
+		}
+		dt{
+			font-weight: bold;
+			margin: .5em;
+			margin-top: 1em;
+		}
+		dd{
+			padding-left: 2em;
+		}
+		.popup{
+			padding-right: 25px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Inline JavaScript <code>window.open</code> Example</h1>
+	<dl>
+		<dt><a href="##" target="_blank">target="_blank" 重开新标签页面</a></dt>
+		<dd>target="_blank" 在严格模式不起作用</dd>
+
+		<dt><a href="javascript:window.open('##');">href="javascript:window.open('##');"</a></dt>
+		<dd>在FF下原先窗口会被window.open()返回结果所覆盖</dd>
+
+		<dt><a href="javascript:popup('##')">javascript:popup('##')</a></dt>
+		<dd>解决上述问题但依旧依赖<code>javascript:前缀</code></dd>
+
+		<dt><a href="##" onclick="this.href='javascript:popup(\'##\')'">onclick="this.href='javascript:popup(\'##\')'"</a></dt>
+		<dd>仍需要javascript</dd>
+
+		<dt><a href="##" onclick="popup(this.href); return false;">onclick="popup(this.href); return false;"</a></dt>
+		<dd>解决上述问题，但依旧为嵌入式事件<code>onclick=""</code></dd>
+
+		<dt><a href="##" class="popup">class="popup"</a></dt>
+		<dd>最佳解决方案，使用<code>class="popup"</code></dd>
+	</dl>
+</body>
+</html>
