@@ -28,7 +28,8 @@
 
 			// 如果参数是字符串
 			if(typeof element == 'string'){
-				element = document.getElementsById(element);
+				element = document.getElementById(element);
+            	console.log(element);
 			}
 
 			// 如果只提供一个参数 则返回这个元素
@@ -114,7 +115,7 @@
 		for(var i = 0; i < allTags.length; i++){
 			element = allTags[i];
 			if(regex.test(element.className)){
-				matchingElements.push.element;
+				matchingElements.push(element);
 			}
 		}
 

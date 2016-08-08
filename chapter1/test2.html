@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ADS.getElementsByClassName()</title>
+	<script src="../ADS.js"></script>
+	<script>
+		var foundResults = ADS.getElementsByClassName('findme', 'li', ADS.$('theList'));
+		console.log(foundResults);
+	</script>
+</head>
+<body>
+	<h1 class="findme">ADS.getElementsByClassName() Example</h1>
+	<p class="findme">This is just an example also</p>
+	<div id="theList">
+		<h2 class="findme">A List!</h2>
+		<ol>
+			<li class="findme">Foo</li>
+			<li class="findme">Bar</li>
+		</ol>
+	</div>
+</body>
+</html>
