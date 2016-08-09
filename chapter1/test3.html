@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="../ADS.js"></script>
+</head>
+<body>
+	<ul id="list">
+		<li class="one1">one1</li>
+		<li class="one2">one2</li>
+		<li class="one3">one3</li>
+	</ul>
+	<script>
+		var list = ADS.$('list');
+		var newOne = document.createElement("div");
+		newOne.innerHTML = "one4";
+		ADS.insertAfter(newOne, list.lastChild);
+	</script>
+</body>
+</html>

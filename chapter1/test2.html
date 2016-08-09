@@ -4,10 +4,6 @@
 	<meta charset="UTF-8">
 	<title>ADS.getElementsByClassName()</title>
 	<script src="../ADS.js"></script>
-	<script>
-		var foundResults = ADS.getElementsByClassName('findme', 'li', ADS.$('theList'));
-		console.log(foundResults);
-	</script>
 </head>
 <body>
 	<h1 class="findme">ADS.getElementsByClassName() Example</h1>
@@ -19,5 +15,10 @@
 			<li class="findme">Bar</li>
 		</ol>
 	</div>
+	<div id="example" style="width:50px;height:50px;background:#000;" onclick="ADS.toggleDisplay(this)"></div>
+	<script>
+		var foundResults = ADS.getElementsByClassName('findme', 'li', ADS.$('theList'));
+		console.log(foundResults);
+	</script>
 </body>
 </html>

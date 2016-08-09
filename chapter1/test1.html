@@ -8,21 +8,6 @@
 		function popup(url){
 			window.open(url);
 		};
-		ADS.addEvent(window, 'load', function(e){
-			// var popups = ADS.getElementsByClassName('popup', 'a');
-			// for(var i = 0; i < popups.length; i++){
-			// 	ADS.addEvent(popups[i], 'click', function(e){
-			// 		window.open(this.href);
-			// 		ADS.eventPreventDefault(e);
-			// 	});
-			// }
-			console.log("for test~");
-			var popup = document.getElementsByClassName('popup');
-			ADS.addEvent(popup, 'click', function(e){
-				e.preventDeafult();
-				alert(popup.text);
-			});
-		});
 	</script>
 	<style>
 		*{
@@ -80,5 +65,18 @@
 		<dt><a href="##" class="popup">class="popup"</a></dt>
 		<dd>最佳解决方案，使用<code>class="popup"</code></dd>
 	</dl>
+
+	<script>
+		ADS.addEvent(window, 'load', function(e){
+			var popups = ADS.getElementsByClassName('popup', 'a');
+			for(var i = 0; i < popups.length; i++){
+				ADS.addEvent(popups[i], 'click', function(e){
+					window.open(this.href);
+					console.log("click jump success!");
+					// ADS.eventPreventDefault(e);
+				});
+			}
+		});
+	</script>
 </body>
 </html>

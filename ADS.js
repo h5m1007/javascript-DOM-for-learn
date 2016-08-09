@@ -29,7 +29,7 @@
 			// 如果参数是字符串
 			if(typeof element == 'string'){
 				element = document.getElementById(element);
-            	console.log(element);
+            	// console.log(element.innerHTML);
 			}
 
 			// 如果只提供一个参数 则返回这个元素
@@ -125,22 +125,64 @@
 	window['ADS']['getElementsByClassName'] = getElementsByClassName;
 
 	function toggleDisplay(node, value){
+		if(!(node = $(node))){
+			return false;
+		}
 
+		if(node.style.display != 'none'){
+			node.style.display = 'none';
+		}else{
+			node.style.display = value || '';
+		}
+
+		return true;
 	};
 	window['ADS']['toggleDisplay'] = toggleDisplay;
 
 	function insertAfter(node, referenceNode){
+		if(!(node = $(node))){
+			return false;
+		}
 
+		if(!(referenceNode = $(referenceNode))){
+			return false;
+		}
+
+		return referenceNode.parentNode.insertBefore(
+			node, referenceNode.nextSibling);
 	};
 	window['ADS']['insertAfter'] = insertAfter;
 
 	function removeChildren(parent){
+		if(!(parent = $(parent))){
+			return false;
+		}
 
+		while(parent.firstChild){
+			parent.firstChild.parentNode.removeChild(parent.firstChild);
+		}
+
+		// 返回父节点，以便实现方法的连缀
+		return parent;
 	};
 	window['ADS']['removeChildren'] = removeChildren;
 
 	function prependChild(parent, newChild){
+		if(!(parent = $(parent))){
+			return false;
+		}
 
+		if(!(newChild = $(newChild))){
+			return false;
+		}
+
+		if(parent.firstChild){
+			parent.insertBefore(newChild, parent.firstChild);
+		}else{
+			parent.appendChild(newChild);
+		}
+
+		return parent;
 	}
 	window['ADS']['prependChild'] = prependChild;
 })();

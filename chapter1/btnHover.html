@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>button hover change</title>
+	<script src="../ADS.js"></script>
+	<script src="btnHover.js"></script>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+		body{
+			font: 62.5% "Lucida Grande", Lucida, Verdana, sans-serif;
+		}
+		img{
+			border: 0;
+		}
+		h1{
+			padding: .25em;
+			margin: 0;
+			background: gray;
+			color: #fff;
+			margin-bottom: 2em;
+		}
+		div{
+			margin: 2em;
+		}
+	</style>
+</head>
+<body>
+	<h1>Multi State Anchor</h1>
+	<div>
+		<a href="##" class="multiStateAnchor">
+			<img src="images/button1.png" width="113" height="67" alt="Button 1">
+		</a>
+		<a href="##" class="multiStateAnchor">
+			<img src="images/button2.png" width="113" height="67" alt="Button 2">
+		</a>
+	</div>
+
+	<script>
+		ADS.addEvent(window, 'load', initMultiStateAnchors);
+	</script>
+</body>
+</html>
