@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>private or special member</title>
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	body {
+		font: 62.5% "Lucida Grande", Lucida, Verdana, sans-serif;
+	}
+
+	code {
+		font: 1em "Courier New", Courier, mono;
+	}
+
+	h1 {
+		padding: 0.25em;
+		margin: 0;
+		margin-bottom: 1em;
+		background: gray;
+		color: white;
+	}
+
+	p {
+		margin: 1em;
+	}
+	</style>
+</head>
+<body>
+	<script>
+		function myConstructor(msg){
+			this.myMsg = msg;
+
+			// 私有属性
+			var separator = ' -';
+			var myOwner = this;
+			// this指向myConstructor
+			// myOwner会被解析成myConstructor的实例
+
+			// 私有方法
+			// 私有方法并不属于原型(prototype)的方法
+			function alertMsg(){
+				// 通过myOwner来访问myConstructor的实例
+				alert(myOwner.myMsg);
+			}
+
+			alertMsg();
+
+			// 特权方法，由this定义方法
+			// 特权方法能被公开访问，且能访问私有成员
+			this.appendToMsg = function(str){
+				this.myMsg += separator + str;
+				alertMsg();
+			}
+		}
+
+		myConstructor.prototype.clearMsg = function(str){
+			// 添加公有方法
+			this.myMsg = '';
+		}
+
+		var myObj = new myConstructor('Hello World!');
+
+		myObj.clearMsg();
+
+		myObj.appendToMsg('leon');
+
+		myObj.alertMsg();// this will fail
+	</script>
+</body>
+</html>

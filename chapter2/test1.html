@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Override the alert() method</title>
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	body {
+		font: 62.5% "Lucida Grande", Lucida, Verdana, sans-serif;
+	}
+
+	code {
+		font: 1em "Courier New", Courier, mono;
+	}
+
+	h1 {
+		padding: 0.25em;
+		margin: 0;
+		margin-bottom: 1em;
+		background: gray;
+		color: white;
+	}
+
+	p {
+		margin: 1em;
+	}
+	</style>
+</head>
+<body>
+	<h1>Override the alert() method</h1>
+	<p>Interesting isn't it?</p>
+
+	<script>
+	// 包装js原生函数
+		function override(){
+			// 覆盖原生alert函数
+			var alert = function(msg){
+				window.alert('overridden: ' + msg);
+			}
+			alert('alert');
+
+			// 在override()的作用域中调用原生alert()
+			window.alert('window.alert');
+		}
+
+		override();
+
+		// var alert = function(msg){
+		// 	// 没经过包装函数，导致无限递归循环
+		// 	window.alert('window.alert');
+		// }
+// 
+		// 在window作用域中调用原生alert()
+		alert('alert from outside!');
+	</script>
+</body>
+</html>
