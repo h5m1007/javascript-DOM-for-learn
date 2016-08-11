@@ -62,15 +62,24 @@
 		myConstructor.prototype.clearMsg = function(str){
 			// 添加公有方法
 			this.myMsg = '';
+			console.log(str + separator);// separator找不到
 		}
 
 		var myObj = new myConstructor('Hello World!');
 
-		myObj.clearMsg();
+		myObj.clearMsg('test');
 
 		myObj.appendToMsg('leon');
 
-		myObj.alertMsg();// this will fail
+		try{
+			myObj.alertMsg();// this will fail
+		} catch(theException) {
+			alert('caught an exception, name: '
+				+ theException.name
+				+ ', message: '
+				+ theException.message
+			);
+		}
 	</script>
 </body>
 </html>

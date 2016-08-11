@@ -185,4 +185,13 @@
 		return parent;
 	}
 	window['ADS']['prependChild'] = prependChild;
+
+	function bindFunction(obj, func){
+		return function(){
+			// 返回匿名函数
+			// 函数.apply(环境,参数)，改变函数的执行环境
+			func.apply(obj, arguments);
+		};
+	};
+	window['ADS']['bindFunction'] = bindFunction;
 })();
