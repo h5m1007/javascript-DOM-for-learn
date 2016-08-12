@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>myLogger Test Page</title>
+	<script src="../ADS.js"></script>
+	<script src="myLogger.js"></script>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<h1>myLogger Test Page</h1>
+	<script>
+		ADS.addEvent(window, 'load', function(){
+			ADS.log.writeRaw('This is raw!');
+			ADS.log.write('<strong>BBB for test!</strong>');
+			ADS.log.writeRaw('<strong>BBB for test!</strong>');
+			ADS.log.header('I\'m a title!');
+		});
+	</script>
+</body>
+</html>
