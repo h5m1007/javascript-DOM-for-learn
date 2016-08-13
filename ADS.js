@@ -199,7 +199,11 @@
 		var de = document.documentElement;
 		return {
 			'width': (
+				// .innerWidth包括窗口宽度和滚动条
+				// 在IE下并不支持该属性
 				window.innerWidth
+				// .clientWidth窗口可视区域，只包括元素宽度
+				// 在IE下支持
 				|| (de && de.clientWidth)
 				|| document.body.clientWidth
 			),

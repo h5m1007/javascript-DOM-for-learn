@@ -12,11 +12,13 @@ function myLogger(id){
 	// 私有方法
 	// 创建保存日志列表的DOM，并加入文档
 	var createWindow = function(){
+		// 动态定位窗口在浏览器中居中显示
 		var browserWindowSize = ADS.getBrowserWindowSize();
+		// 居中放置时左上角位置
 		var top = ((browserWindowSize.height - 200) / 2) || 0;
 		var left = ((browserWindowSize.width - 200) / 2) || 0;
 
-		// 创建作为日志的DOM节点
+		// 创建作为日志窗口的DOM节点
 		logWindow = document.createElement('ul');
 		logWindow.setAttribute('id', id);
 
@@ -61,8 +63,8 @@ function myLogger(id){
 				document.createTextNode('Message was undefined!')
 			);
 		} else if(typeof li.innerHTML != undefined){
-			// 当msg为HTML字符串时
-			// .innerHTML把msg转化为HTML文档
+			// 当msg存在html标签但以字符串显示时
+			// 把msg赋值给li标签并以html文档输出
 			li.innerHTML = msg;
 		} else{
 			li.appendChild(
@@ -88,8 +90,8 @@ myLogger.prototype = {
 			return this.writeRaw('ADS.log: null message!');
 		}
 
-		// 当msg不是字符串，调用toString()
-		// 又msg不存在toString，则返回msg的类型
+		// 当msg不是字符串，调用toString()强制转换msg为字符串
+		// 又msg不存在toString()方法，则返回msg的类型
 		if(typeof msg != 'string'){
 			if(msg.toString) {
 				return this.writeRaw(msg.toString())
@@ -98,6 +100,7 @@ myLogger.prototype = {
 			}
 		}
 
+		// /</g 正则匹配: /主体/, g: 指定在整个字符串中匹配
 		msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 		return this.writeRaw(msg);
 	},
