@@ -89,6 +89,7 @@ ADS.addEvent(window, 'load', function(){
 
 ADS.addEvent(window, 'load', function(){
 	ADS.log.header('Clone and Move a Node');
+	
 	var firefoxLi = document.getElementById('firefoxListItem');
 	var firefoxLiClone = firefoxLi.cloneNode(true);// 取得节点的引用，并非副本
 	var unorderedList = firefoxLi.parentNode;
