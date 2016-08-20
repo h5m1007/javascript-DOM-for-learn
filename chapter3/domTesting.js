@@ -89,7 +89,6 @@ ADS.addEvent(window, 'load', function(){
 
 ADS.addEvent(window, 'load', function(){
 	ADS.log.header('Clone and Move a Node');
-	
 	var firefoxLi = document.getElementById('firefoxListItem');
 	var firefoxLiClone = firefoxLi.cloneNode(true);// 取得节点的引用，并非副本
 	var unorderedList = firefoxLi.parentNode;
@@ -98,3 +97,24 @@ ADS.addEvent(window, 'load', function(){
 	unorderedList.appendChild(firefoxLiClone);
 });
 
+ADS.addEvent(window, 'load', function(){
+	ADS.log.header('About element attribute');
+	var safariAnchor = document.getElementById('safari');
+	var href = safariAnchor.getAttribute('href');
+	ADS.log.write(href);
+
+	safariAnchor.setAttribute('title', 'safari is for Mac os X');
+
+	var firefox = document.getElementById('firefoxListItem');
+	console.log(firefox.childNodes[1]);
+	firefox.childNodes[1].removeAttribute('title');
+});
+
+ADS.addEvent(window, 'load', function(){
+	ADS.log.header('Get all browserList elements by tag name');
+	var list = document.getElementById('browserList');
+	var ancestors = list.getElementsByTagName('*');
+	for(var i = 0; i < ancestors.length; i++) {
+		ADS.log.write(ancestors.item(i).nodeName);
+	}
+});

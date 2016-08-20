@@ -233,4 +233,44 @@
 		DOCUMENT_FRAGMENT_NODE	    : 11,
 		NOTATION_NODE	            : 12
 	}
+
+	// 创建递归(爬树tree-walking)
+	// 进行遍历且在每个节点执行一个匿名函数的调用
+	function walkElementsLinear(func, node){
+		var root = node || window.document;
+		var nodes = root.getElementsByTagName("*");
+		for(var i = 0; i < nodes.length; i++){
+			func.call(nodes[i]);
+		}
+	}
+
+	// 创建递归，跟踪节点的深度或构建一个路经
+	function walkTheDOMRecursive(func, node, depth, returnedFromParent){
+		var root = node || window.document;
+		var returnedFromParent = func.call(root, depth++, returnedFromParent);
+		var node = root.firstChild;
+		while(node){
+			walkTheDOMRecursive(func, node, depth, returnedFromParent);
+			node = node.nextSibling;
+		}
+	}
+
+	// 查找每个节点的属性
+	function walkTheDOMWithAttributes(node, func, depth, returnedFromParent){
+		var root = node || window.document;
+		returnedFromParent = func(root, depth++, returnedFromParent);
+		if(root.attributes){
+			for(var i = 0; i < root.attributes.length; i++){
+				walkTheDOMWithAttributes(root.attributes[i],
+					func, depth-1, returnedFromParent);
+			}
+		}
+		if(root.nodeType != ADS.node.ATTRIBUTE_NODE){
+			node = root.firstChild;
+			while(node){
+				walkTheDOMWithAttributes(node, func, depth, returnedFromParent);
+				node = node.nextSibling;
+			}
+		}
+	}
 })();
