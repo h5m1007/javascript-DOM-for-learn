@@ -1,3 +1,20 @@
+// 向js的string对象原型添加新方法
+
+// 重复一个字符串
+if(!String.repeat){
+	String.prototype.repeat = function(l){
+		// 按给定的次数(l)，重复字符串
+		return new Array(l+1).join(this);
+	}
+}
+
+// 清除结尾和开头处的空白符
+if(!String.trim){
+	String.prototype.trim = function(){
+		return this.replace(/^\s+|\s+$/g, '');
+	}
+}
+
 // 自定义js库
 (function(){
 	// ADS命名空间
@@ -273,4 +290,14 @@
 			}
 		}
 	}
+
+	/* 例：把word-word转换为wordWord */
+	// 主要处理嵌入的样式属性
+	function camelize(s){
+		return s.replace(/-(\w)/g, function(strMatch, p1){
+			return p1.toUpperCase();
+		});
+	};
+	window['ADS']['camelize'] = camelize;
+
 })();
