@@ -267,10 +267,12 @@ if(!String.trim){
 		var returnedFromParent = func.call(root, depth++, returnedFromParent);
 		var node = root.firstChild;
 		while(node){
+			// 处理root的子节点
 			walkTheDOMRecursive(func, node, depth, returnedFromParent);
 			node = node.nextSibling;
 		}
 	}
+	window['ADS']['walkTheDOMRecursive'] = walkTheDOMRecursive;
 
 	// 查找每个节点的属性
 	function walkTheDOMWithAttributes(node, func, depth, returnedFromParent){
