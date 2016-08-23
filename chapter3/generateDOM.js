@@ -60,6 +60,106 @@
 
 	function processAttrbute(tabCount, refParent){
 
+		// 跳过文本节点
+		if(this.nodeType != ADS.node.ATTRIBUTE_NODE){
+			return;
+		}
+
+		// 取得属性值
+		var attrValue = (this.nodeValue ? encode(this.nodeValue.trim()) : '');
+		if(this.nodeName == 'cssText') alert('true');
+		// 没有值则返回
+		if(!attrValue) return;
+		// 确定缩进级别
+		var tabs = (tabCount ? '\t'.repeat(parseInt(tabCount)) : '');
+
+		// 由nodeName判断，除class和style需特殊处理
+		// 其它类型按常规处理
+		switch(this.nodeName){
+			default:
+				if(this.nodeName.substring(0,2) == 'on'){
+					// 当属性名以'on'开头
+					// 即为一个嵌入事件属性
+					// 重新创建一个给该属性赋值的fn
+					domCode += tabs
+						+ refParent
+						+ '.'
+						+ this.nodeName
+						+ '= function(){'
+						+ attrValue
+						+ '}\n';
+				} else{
+					// 其余情况使用setAttribute
+					domCode += tabs
+					+ refParent
+					+ '.setAttribute(\''
+					+ this.nodeName
+					+ '\', '
+					+ checkForVariable(attrValue)
+					+ ');\n';
+				}
+			break;
+
+			case 'class':
+				// 使用className属性为class赋值
+				domCode += tabs
+					+ refParent
+					+ '.className ='
+					+ checkForVariable(attrValue)
+					+ ';\n';
+			break;
+
+			case 'style':
+				// 使用正则表达式
+				// 基于 ; 和 邻近的空格符
+				// 来分割样式属性的值
+				var style = attrValue.split(/\s*;\s*/);
+
+				if(style){
+					for(pair in style){
+						if(!style[pair]) continue;// 中断迭代
+
+						// 使用正则基于 : 和空格符
+						// 来分割每对样式属性
+						var prop = style[pair].split(/\s*:\s*/);
+
+						// 此处prop[0]为属性名
+						// 而prop[1]为属性值
+						if(!prop[1]) continue;
+
+						// 将css-property格式的CSS属性
+						// 转换为cssProperty格式
+						prop[0] = ADS.camelize(prop[0]);
+
+						var propValue = checkForVariable(prop[1]);
+
+						if(prop[0] == 'float'){
+							// cssFloat为标准属性
+							domCode += tabs
+								+ refParent
+								+ '.style.cssFloat = '
+								+ propValue
+								+ ';\n';
+
+							// styleFloat为IE使用的属性
+							domCode += tabs
+								+ refParent
+								+ '.style.styleFloat = '
+								+ propValue
+								+ ';\n';
+						} else{
+							domCode += tabs
+								+ refParent
+								+ '.style'
+								+ prop[0]
+								+ '='
+								+ propValue
+								+ ';\n';
+						}
+					}
+				}
+			break;
+		}
 	};
 
 	function processNode(tabCount, refParent){
