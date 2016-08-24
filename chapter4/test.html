@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>image load</title>
+	<script src="../ADS.js"></script>
+</head>
+<body>
+	<script>
+		(function(){
+			ADS.addEvent(window, 'load', function(){
+				// 创建一个图像元素
+				var image = document.createElement('img');
+
+				// 当且只有图像载入后将其添加到文档主体
+				ADS.addEvent(image, 'load', function(){
+					document.body.appendChild(image);
+				});
+
+				// 如果载入出错时则添加相应信息
+				ADS.addEvent(image, 'error', function(){
+					var msg = document.createTextNode('
+						The image failed to load!');
+					document.body.appendChild(msg);
+				});
+
+				image.setAttribute(
+					'src',
+					'../image/1.jpeg'
+				);
+
+				var imgMissing = document.createElement('img');
+				ADS.addEvent(imgMissing, 'load', function(){
+					document.body.appendChild(imgMissing);
+				});
+				ADS.addEvent(imgMissing, 'error', function(){
+					var msg = document.createTextNode('
+						imgMissing failed to load!');
+					document.body.appendChild(msg);
+				});
+				imgMissing.setAttribute(
+					'src',
+					'../image/2.jpeg'
+				);
+			});
+		})();
+	</script>
+</body>
+</html>
