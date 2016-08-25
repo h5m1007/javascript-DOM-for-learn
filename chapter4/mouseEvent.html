@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>mouse move</title>
+	<script src="../ADS.js"></script>
+	<script src="../chapter2/myLogger.js"></script>
+	<style>
+		#box {
+			width:80px;
+			height:80px;
+			padding: 10px;
+			background: #f06;
+			text-align: center;
+			color: white;
+			font-weight: bold;
+			-moz-border-radius: 10px;
+			-moz-border-radius-bottomleft: 0em
+		}
+	</style>
+</head>
+<body>
+	<h1>Mouse Move Events</h1>
+	<div id="content">
+		<div id="box"> Test Box </div>
+	</div>
+
+	<script>
+		(function(){
+			ADS.addEvent(window, 'load', function(){
+				// 将事件类型和对象记录在日志窗口
+				function logit(e){
+					switch(this.nodeType){
+						case ADS.node.DOCUMENT_NODE:
+							ADS.log.write(e.type + ' on document');
+						break;
+						case ADS.node.ELEMENT_NODE:
+							ADS.log.write(e.type + ' on box');
+						break;
+					}
+				}
+
+				// ADS.addEvent(document, 'mousemove', logit);
+				// ADS.addEvent(document, 'mouseover', logit);
+				// ADS.addEvent(document, 'mouseout', logit);
+
+				// var box = document.getElementById('box')
+				// ADS.addEvent(box, 'mousemove', logit);
+				// ADS.addEvent(box, 'mouseover', logit);
+				// ADS.addEvent(box, 'mouseout', logit);
+
+				ADS.addEvent(document, 'mousedown', logit);
+				ADS.addEvent(document, 'mouseup', logit);
+				ADS.addEvent(document, 'click', logit);
+				ADS.addEvent(document, 'dblclick', logit);
+
+				var box = document.getElementById('box')
+				ADS.addEvent(box, 'mousedown', logit);
+				ADS.addEvent(box, 'mouseup', logit);
+				ADS.addEvent(box, 'click', logit);
+				ADS.addEvent(box, 'dblclick', logit);
+			});
+		})();
+	</script>
+</body>
+</html>

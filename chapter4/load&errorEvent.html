@@ -19,14 +19,14 @@
 
 				// 如果载入出错时则添加相应信息
 				ADS.addEvent(image, 'error', function(){
-					var msg = document.createTextNode('
-						The image failed to load!');
+					var msg = document.createTextNode(
+						'The image failed to load!');
 					document.body.appendChild(msg);
 				});
 
 				image.setAttribute(
 					'src',
-					'../image/1.jpeg'
+					'../image/1.jpg'
 				);
 
 				var imgMissing = document.createElement('img');
@@ -34,13 +34,13 @@
 					document.body.appendChild(imgMissing);
 				});
 				ADS.addEvent(imgMissing, 'error', function(){
-					var msg = document.createTextNode('
-						imgMissing failed to load!');
+					var msg = document.createTextNode(
+						'imgMissing failed to load!');
 					document.body.appendChild(msg);
 				});
 				imgMissing.setAttribute(
 					'src',
-					'../image/2.jpeg'
+					'../image/2.jpg'
 				);
 			});
 		})();
