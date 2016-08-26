@@ -4,6 +4,7 @@ function isPostalCode(s){
 	);
 }
 
+// 对表单提交做验证
 ADS.addEvent(window, 'load', function(){
 	ADS.addEvent(
 		document.getElementById('canadianAddress'),
@@ -16,8 +17,60 @@ ADS.addEvent(window, 'load', function(){
 				alert('That \'s not a valid Canadian postal code!');
 
 				// 取消表单提交操作
-				ADS.preventDefault(e);
+				// ADS.preventDefault(e);
 			}
 		}
 	);
+});
+
+// 对表单输入数据做验证
+ADS.addEvent(window, 'load', function(){
+	// 添加初始样式
+	var postalCode = document.getElementById('postalCode');
+	postalCode.className = 'inputMissing';
+
+	// 当获得焦点时将类修改为编辑
+	ADS.addEvent(postalCode, 'focus', function(e){
+		this.className = 'inputEditing';
+	});
+
+	// 当失去焦点时进行验证输入信息并改变样式
+	ADS.addEvent(postalCode, 'blur', function(e){
+		if(this.value == ''){
+			this.className = 'inputMissing';
+		} else if(!isPostalCode(this.value)) {
+			this.className = 'inputInvalid';
+		} else{
+			this.className = 'inputComplete';
+		}
+	});
+});
+
+ADS.addEvent(window, 'load', function(){
+	var postalCode = ADS.$('postalCode');
+
+	ADS.addEvent(postalCode, 'change', function(e){
+		var newPostalCode = this.value;
+
+		if(!isPostalCode(newPostalCode)) return;
+
+		var req = new XMLHttpRequest();
+		req.open('POST', 'server.js?postalCode=' + newPostalCode, true);
+		req.onreadystatechange = function(){
+			if(req.readyState == 4){
+				eval(req.responseText);
+
+				if(ADS.$('street').value == ''){
+					ADS.$('street').value = street;
+				}
+				if(ADS.$('city').value == ''){
+					ADS.$('city').value = city;
+				}
+				if(ADS.$('province').value == ''){
+					ADS.$('province').value = province;
+				}
+			}
+		}
+		req.send();
+	});
 });

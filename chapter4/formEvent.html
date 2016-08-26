@@ -5,6 +5,51 @@
 	<title>Document</title>
 	<script src="../ADS.js"></script>
 	<script src="address.js"></script>
+	<style>
+		input{
+			padding: .25em;
+			border: 1px solid #828282;
+		}
+		#name, #street, #city{
+			width: 180px;
+		}
+		#postalCode, #province{
+			width: 80px;
+		}
+
+		label{
+			font-size: 1.3em;
+			margin: .25em 0;
+			display: block;
+		}
+
+		p{
+			margin: 0 auto auto 0;
+		}
+
+		.inputEditing{
+			background: #FFF url(../image/editing.gif) no-repeat left center;
+			padding-left: 20px;
+			width: 380px;
+		}
+
+		.inputMissing{
+			background: #FFF url(../image/required.gif) no-repeat left center;
+			padding-left: 20px;
+			width: 380px;
+		}
+
+		.inputInvalid{
+			background: #FFF url(../image/invalid.gif) no-repeat left center;
+			padding-left: 20px;
+			width: 380px;
+		}
+
+		.inputComplete{
+			background: #FFF url(../image/complete.gif) no-repeat left center;
+			padding-left: 20px;
+		}		
+	</style>
 </head>
 <body>
 	<h1>Form Events: An Address Form</h1>
@@ -16,7 +61,8 @@
 			</div>
 			<div>
 				<label for="postalCode">Postal Code (required)</label>
-				<input type="text" id="postalCode" name="postalCode">
+				<input type="text" id="postalCode" name="postalCode" class="required">
+				<p>In the format A#A #A#</p>
 			</div>
 			<div>
 				<label for="street">Street</label>

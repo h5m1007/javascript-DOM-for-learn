@@ -76,7 +76,7 @@ if(!String.trim){
 
 		if(node.addEventListener){
 			// for W3C
-			node.addEventListener(type, listener, false);
+			node.addEventListener(type, listener, false);// 参数false表明在冒泡阶段
 			return true;
 		}else if(node.attachEvent){
 			// for MSIE

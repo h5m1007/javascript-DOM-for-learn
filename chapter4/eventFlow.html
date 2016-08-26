@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Event Flow</title>
+	<script src="../ADS.js"></script>
+	<script src="flow.js"></script>
+	<style>
+		#content{
+			width: 90%;
+		}
+
+		ul{
+			padding: 10px;
+			margin: 0;
+			border: 1px dotted black;
+			background-color: white;
+			list-style: none;
+		}
+
+		p{
+			margin: 0;
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+
+		.clicked{
+			background: #ffcf54;
+		}
+
+		#list1{
+			height: 80px;
+		}
+
+		#list2{
+			margin-top: 10px;
+			height: 20px;
+		}
+
+		#list3{
+			position: absolute;
+			top: 190px;
+			left: 150px;
+		}
+
+		#list4{
+			margin-top: 10px;
+			height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Event Flow</h1>
+	<div id="content">
+		<ul id="list1">
+			<li>
+				<p>List 1</p>
+				<ul id="list2">
+					<li>
+						<p>List 2</p>
+						<ul id="list3">
+							<li>
+								<p>List 3</p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+		<ul id="list4">
+			<p>List 4</p>
+		</ul>
+	</div>
+</body>
+</html>
