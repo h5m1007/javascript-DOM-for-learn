@@ -302,4 +302,56 @@ if(!String.trim){
 	};
 	window['ADS']['camelize'] = camelize;
 
+	// 阻止事件冒泡
+	function stopPropagation(eventObject){
+		eventObject = eventObject || getEventObject(eventObject);
+		if(eventObject.stopPropagation){
+			eventObject.stopPropagation();
+		} else{
+			eventObject.cancelBubble = true;
+		}
+	}
+	window['ADS']['stopPropagation'] = stopPropagation;
+
+	function preventDefault(eventObject){
+		eventObject = eventObject || getEventObject(eventObject);
+		if(eventObject.preventDefault){
+			eventObject.preventDefault();
+		}else{
+			eventObject.returnValue = false;
+		}
+	}
+	window['ADS']['preventDefault'] = preventDefault;
+
+	function addLoadEvent(loadEvent, waitForImages){
+		if(!isCompatible()) return false;
+
+		// 如果等待标记为true则使用常规的添加事件的方法
+		if(waitForImages){
+			return addEvent(window, 'load', loadEvent);
+		}
+
+		// 否则使用另外的方式包装loadEvent()
+		// 使得this指向正确的内容且确保事件不会被执行两遍
+		var init = function(){
+			// 如果这个函数已经被调用过则返回
+			if(arguments.callee.done) return;
+
+			// 标记这个函数以便检验它是否运行过
+			arguments.callee.done = true;
+
+			// 在document环境中运行载入事件
+			loadEvent.apply(document, arguments);
+		};
+
+		// 为DOMContentLoaded事件注册事件侦听器
+		if(document.addEventListener){
+			document.addEventListener("DOMContentLoaded", init, false);
+		}
+
+		// 对于Safari，使用setInterval()函数检测
+		// document是否载入完成
+		
+	}
+
 })();
