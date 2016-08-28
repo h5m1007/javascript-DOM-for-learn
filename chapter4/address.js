@@ -17,7 +17,7 @@ ADS.addEvent(window, 'load', function(){
 				alert('That \'s not a valid Canadian postal code!');
 
 				// 取消表单提交操作
-				// ADS.preventDefault(e);
+				ADS.preventDefault(e);
 			}
 		}
 	);

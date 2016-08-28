@@ -302,6 +302,12 @@ if(!String.trim){
 	};
 	window['ADS']['camelize'] = camelize;
 
+	// 取得事件对象
+	function getEventObject(e){
+		return e || window.event;
+	}
+	window['ADS']['getEventObject'] = getEventObject;
+
 	// 阻止事件冒泡
 	function stopPropagation(eventObject){
 		eventObject = eventObject || getEventObject(eventObject);
@@ -351,7 +357,31 @@ if(!String.trim){
 
 		// 对于Safari，使用setInterval()函数检测
 		// document是否载入完成
-		
+		if(/Webkit/i.test(navigator.userAgent)){
+			var _timer = setInterval(function(){
+				if(/loaded|complete/.test(document.readyState)){
+					clearInterval(_timer);
+					init();
+				}
+			},10);
+		}
+
+		// 对于IE则使用条件注释
+		// 附加一个在载入过程最后执行的脚本
+		// 并检测该脚本是否载入完成
+		/*@cc_on*/
+		/*@if (@_win32)
+		document.write("<script id=__ie_onload defer
+			src=javaescript:void(0)><\/script>");
+		var script = document.getElementById("__ie_onload");
+		script.onreadystatechange = function(){
+			if(this.readyState == "complete"){
+				init();
+			}
+		};
+		/*@end @*/
+		return true;
 	}
+	window['ADS']['addLoadEvent'] = addLoadEvent;
 
 })();
