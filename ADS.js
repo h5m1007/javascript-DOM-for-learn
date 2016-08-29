@@ -369,10 +369,9 @@ if(!String.trim){
 		// 对于IE则使用条件注释
 		// 附加一个在载入过程最后执行的脚本
 		// 并检测该脚本是否载入完成
-		/*@cc_on*/
+		/*@cc_on @*/
 		/*@if (@_win32)
-		document.write("<script id=__ie_onload defer
-			src=javaescript:void(0)><\/script>");
+		document.write("<script id=__ie_onload defer src=javascript:void(0)><\/script>");
 		var script = document.getElementById("__ie_onload");
 		script.onreadystatechange = function(){
 			if(this.readyState == "complete"){
@@ -383,5 +382,121 @@ if(!String.trim){
 		return true;
 	}
 	window['ADS']['addLoadEvent'] = addLoadEvent;
+
+	// 兼容各浏览器，获取真正的目标对象
+	function getTarget(eventObject){
+		eventObject = eventObject || getEventObject(eventObject);
+
+		// 如果是W3C标准模型或IE
+		var target = eventObject.target || eventObject.srcElement;
+
+		// 如果是Safari中，它的目标对象为文本节点
+		// 那么重新将目标对象指定为它的父元素
+		if(target.nodeType == ADS.node.TEXT_NODE){
+			target = node.parentNode;
+		}
+
+		return target;
+	}
+	window['ADS']['getTarget'] = getTarget;
+
+	// 兼容各浏览器，获取真正的鼠标点击
+	function getMouseButton(eventObject){
+		eventObject = eventObject || getEventObject(eventObject);
+
+		// 使用适当的属性初始化一个对象变量
+		var buttons = {
+			'left': false,
+			'middle': false,
+			'right': false
+		};
+
+		// 检查eventObject对象的toString()方法的值
+		// W3C DOM对象有toString()方法
+		// 且返回值为MouseEvent
+		if(eventObject.toString && eventObject.toString().indexOf('MouseEvent') != -1){
+			// W3C方式
+			switch(eventObject.button){
+				case 0:
+					buttons.left = true;
+				break;
+				case 1:
+					buttons.middle = true;
+				break;
+				case 2:
+					buttons.right = true;
+				break;
+				default:
+					break;
+			}
+		} else if(eventObject.button){
+			// IE方式
+			switch(eventObject.button){
+				case 1:
+					buttons.left = true;
+				break;
+				case 2:
+					buttons.right = true;
+				break;
+				case 3:
+					buttons.left = true;
+					buttons.right = true;
+				break;
+				case 4:
+					buttons.middle = true;
+				break;
+				case 5:
+					buttons.left = true;
+					buttons.middle = true;
+				break;
+				case 6:
+					buttons.middle = true;
+					buttons.right = true;
+				break;
+				case 7:
+					buttons.left = true;
+					buttons.middle = true;
+					buttons.right = true;
+				break;
+				default: break;
+			}
+		} else {
+			return false;
+		}
+
+		return buttons;
+	}
+	window['ADS']['getMouseButton'] = getMouseButton;
+
+	// 兼容各浏览器，获取真正光标相对于文档的坐标位置
+	function getPointerPositionInDocument(eventObject){
+		eventObject = eventObject || getEventObject(eventObject);
+
+		var x = eventObject.pageX || (eventObject.clientX
+			+ (document.documentElement.scrollLeft
+				|| document.body.scrollLeft));
+		var y = eventObject.pageY || (eventObject.clientY
+			+ (document.documentElement.scrolltop
+				|| document.documentElement.scrolltop));
+		// 现在x和y中都包含着鼠标
+		// 相对于文档原点坐标
+		return {
+			'x': x,
+			'y': y
+		};
+	}
+	window['ADS']['getPointerPositionInDocument'] = getPointerPositionInDocument;
+
+	// 获得键盘按键代码和对应的ASCII值
+	function getKeyPressed(eventObject){
+		eventObject = eventObject || getEventObject(eventObject);
+
+		var code = eventObject.keyCode;
+		var value = String.fromCharCode(code);
+		return {
+			'code': code,
+			'value': value
+		};
+	}
 
 })();

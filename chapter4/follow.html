@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Follow Pointer Example</title>
+	<script src="../ADS.js"></script>
+	<script src="../chapter2/myLogger.js"></script>
+	<style>
+		body {
+			font: 62.5% "Lucida Grande", Lucida, Verdana, sans-serif;
+		}
+		#follow {
+			display: inline;
+			background: #000;
+			color:white;
+			padding:1em;
+			margin:0 auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<div id="follow">Follow Pointer</div>
+	</div>
+
+	<script>
+		ADS.addEvent(window, 'load', function(){
+			// 定义要移动的对象且绝对定位
+			var object = document.getElementById('follow');
+			object.style.position = 'absolute';
+
+			// 为文档的mousemove事件创建侦听器
+			function eventListener (e){
+				var pointer = ADS.getPointerPositionInDocument(e);
+
+				// 相对于鼠标指针，来定位之前的移动对象
+				object.style.left = pointer.x + 'px';
+				object.style.top = pointer.y + 'px';
+				ADS.log.write(
+					'X轴坐标: ' + object.style.left + ', '
+					+ 'Y轴坐标: ' + object.style.top
+				);
+			}
+
+			// 为侦听器指定给文档对象的mousemove事件
+			ADS.addEvent(document, 'mousemove', eventListener);
+
+		});
+	</script>
+</body>
+</html>
