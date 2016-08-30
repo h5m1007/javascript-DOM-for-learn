@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Load Event</title>
+	<script src="../ADS.js"></script>
+	<script src="../chapter2/myLogger.js"></script>
+	<style>
+		#inline-image {
+			width: 400px;
+			height:  400px;
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<p>The page has 2 load events. One useing ADS.addEvent() and the other using ADS.addLoadEvent(). The latter will run before the large image finishes loading.</p>
+		<h2>A large inline image from the NASA web site</h2>
+
+		<div><img src="../image/1.jpg" alt="" id="inline-image"></div>
+
+		<script>
+			(function(){
+				// 使用常规addEvent()为window对象注册载入事件
+				ADS.addEvent(window, 'load', function(e){
+					ADS.log.write('ADS.addEvent(window, load...) invoked');
+				});
+
+				// 使用改进后的addLoadEvent
+				ADS.addLoadEvent(function(e){
+					ADS.log.write('ADS.addLoadEvent(...) invoked');
+				});
+
+				// 设置改进后的addLoadEvent方法中
+				// 第二个参数为true，启用原始的addEvent
+				ADS.addLoadEvent(function(e){
+					ADS.log.write('ADS.addLoadEvent(..., true) invoked');
+				}, true);
+			})();
+
+		</script>
+	</div>
+</body>
+</html>

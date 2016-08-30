@@ -329,10 +329,14 @@ if(!String.trim){
 	}
 	window['ADS']['preventDefault'] = preventDefault;
 
+	// 处理window.load的情况下
+	// 存在大文件如标记中嵌入的img元素待加载
+	// load事件需等所有图像载入完成从被调用的问题
 	function addLoadEvent(loadEvent, waitForImages){
 		if(!isCompatible()) return false;
 
-		// 如果等待标记为true则使用常规的添加事件的方法
+		// 当第二个参数设为true
+		// 则调用原始addEvent方法
 		if(waitForImages){
 			return addEvent(window, 'load', loadEvent);
 		}

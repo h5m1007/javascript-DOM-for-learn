@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>advancED Image Replacement</title>
+	<script src="../ADS.js"></script>
+	<link rel="stylesheet" href="../shared/source.css">
+	<style>
+		/* 图像被禁用时为文本添加的样式 */
+		#advancedHeader{
+			color: #1A5B9D;
+		}
+
+		/* 根据图像设置标题大小 */
+		#advancedHeader.advancED{
+			height: 60px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		/* 使用不透明图像隐藏文本 */
+		#advancedHeader.advancED span{
+			background: white url('../image/ADS.png') no-repeat;
+			display: block;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<h1>advancED Image Replacement</h1>
+	<ul id="nav">
+		<li><a href="shea.html">Shea</a></li>
+		<li><a href="advancED.html">advancED</a></li>
+	</ul>
+	<div id="content">
+		<h2 id="advancedHeader">AdvancED DOM Scripting</h2>
+		<p>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. In vel quam id urna condimentum gravida. Etiam euismod purus vel eros. Sed nisl lorem, ultrices ut, sodales sit amet, dignissim nec, neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In sem. Pellentesque eget libero consequat enim pellentesque varius. Duis sagittis ligula at lorem. Proin venenatis, enim at ornare mollis, augue quam varius ante, in suscipit quam neque at lorem. Suspendisse vulputate vestibulum enim. Aliquam malesuada.
+		</p>
+	</div>
+
+	<script>
+		ADS.addEvent(window, 'load', function(){
+			// 取得标题
+			var header = ADS.$('advancedHeader');
+			// 创建图像元素
+			var image = document.createElement('img');
+
+			// 当图像载入成功后再添加span和类名
+			ADS.addEvent(image, 'load', function(){
+				var s = document.createElement('span');;
+				// 将span添加为标题的子元素
+				ADS.prependChild(header, s);
+
+				// 创建必要的title属性
+				if(!header.getAttribute('title')){
+					var i, child;
+					var title = '';
+					// 循环遍历子元素以组合title属性
+					for(i = 0; child = header.childNodes[i]; i++){
+						if(child.nodeValue){
+							title += child.nodeValue;
+						}
+					}
+					header.setAttribute('title', title);
+				}
+
+				// 修改类名来标明变更并应用css
+				header.className = 'advancED';
+			});
+
+			// 载入图像
+			// 这里为图像加载事件的开关
+			image.src = '../image/ADS.png';
+		});
+	</script>
+</body>
+</html>
