@@ -302,6 +302,15 @@ if(!String.trim){
 	};
 	window['ADS']['camelize'] = camelize;
 
+	// wordWord转换为word-word
+	function uncamelize(s, sep){
+		sep = sep || '-';
+		return s.replace(/([a-z])([A-Z])/g, function(strMatch, p1, p2){
+			return p1 + sep + p2.toLowerCase();
+		});
+	}
+	window['ADS']['uncamelize'] = uncamelize;
+
 	// 取得事件对象
 	function getEventObject(e){
 		return e || window.event;
@@ -502,5 +511,52 @@ if(!String.trim){
 			'value': value
 		};
 	}
+	window['ADS']['getKeyPressed'] = getKeyPressed;
+
+	// 通过ID修改单个元素的样式
+	function setStyleById(element, styles){
+		// 取得对象的引用
+		if(!(element = $(element))) return false;
+		// 循环遍历styles对象并应用每个属性
+		for(property in styles){
+			if(!styles.hasOwnProperty(property)) continue;
+
+			if(element.style.setProperty){
+				// DOM2支持setProperty
+				element.style.setProperty(
+					uncamelize(property, '-'),
+					styles[property],
+					null
+				);
+			} else {
+				// 备用方法(IE支持)
+				element.style[camelize(property)] = styles[property];
+			}
+		}
+		return true;
+	}
+	window['ADS']['setStyle'] = setStyle;
+	window['ADS']['setStyleById'] = setStyleById;
+
+	// 通过类名修改多个元素的样式
+	function setStylesByClassName(parent, tag, className, styles){
+		if(!(parent = $(parent))) return false;
+		var elements = getElementsByClassName(className, tag, parent);
+		for(var e = 0; e < elements.length; e++){
+			setStyleById(elements[e], styles);
+		}
+		return true;
+	}
+	window['ADS']['setStylesByClassName'] = setStylesByClassName;
+
+	// 通过标签名修改多个元素的样式
+	function setStylesByTagName(tagname, styles, parent){
+		parent = $(parent) || document;
+		var elements = parent.getElementsByTagName(tagname);
+		for(var e = 0; e < elements.length; e++){
+			setStyleById(elements[e], styles);
+		}
+	}
+	window['ADS']['setStylesByTagName'] = setStylesByTagName;
 
 })();
