@@ -535,7 +535,7 @@ if(!String.trim){
 		}
 		return true;
 	}
-	window['ADS']['setStyle'] = setStyle;
+	window['ADS']['setStyle'] = setStyleById;
 	window['ADS']['setStyleById'] = setStyleById;
 
 	// 通过类名修改多个元素的样式
@@ -558,5 +558,63 @@ if(!String.trim){
 		}
 	}
 	window['ADS']['setStylesByTagName'] = setStylesByTagName;
+
+	// 取得包含元素类名的数组
+	function getClassName(element){
+		if(!(element = $(element))) return false;
+
+		// 用一个空格替换多个空格
+		// 且以空格分割类名
+		return (element.className.replace(/\s+/,' ').split(' '));
+	};
+	window['ADS']['getClassName'] = getClassName;
+
+	// 检查元素内是否存在某个类
+	function hasClassName(element, className){
+		if(!(element = $(element))) return false;
+
+		var classes = getClassName(element);
+		for(var i = 0; i < classes.length; i++){
+			// 检测className是否匹配
+			if(classes[i] === className) {
+				return true;
+			}
+		}
+		return false;
+	}
+	window['ADS']['hasClassName'] = hasClassName;
+
+	// 为元素添加类
+	function addClassName(element, className){
+		if(!(element = $(element))) return false;
+
+		// 将类名添加到当前className的末尾
+		// 如果没有className则不包含空格
+		element.className += (element.className ? ' ' : '') + className;
+		return true;
+	}
+	window['ADS']['addClassName'] = addClassName;
+
+	// 从元素中删除类
+	function removeClassName(element, className){
+		if(!(element = $(element))) return false;
+
+		var classes = getClassName(element);
+		var length = classes.length;
+
+		// 循环遍历数组
+		// 删除匹配项
+		// 因删除数组会变短，则反向循环
+		for(var i = length - 1; i > 0; i--){
+			if(classes[i] === className) {
+				delete(classes[i]);
+			}
+		}
+
+		// .join(' ') 以空格分割数组并返回字符串
+		element.className = classes.join(' ');
+		return (length == classes.length ? false : true);
+	};
+	window['ADS']['removeClassName'] = removeClassName;
 
 })();
