@@ -617,4 +617,92 @@ if(!String.trim){
 	};
 	window['ADS']['removeClassName'] = removeClassName;
 
+	// 添加新样式表
+	function addStyleSheet(url, media){
+		media = media || 'screen';
+		var link = document.createElement('link');
+		link.setAttribute('rel', 'stylesheet');
+		link.setAttribute('type', 'text/css');
+		link.setAttribute('href', url);
+		link.setAttribute('media', media);
+		document.getElementsByTagName('head')[0].appendChild(link);
+	}
+	window['ADS']['addStyleSheet'] = addStyleSheet;
+
+	// 通过url取得包含所有样式表的数组
+	function getStyleSheets(url, media){
+		var sheets = [];
+		for(var i = 0; i < document.styleSheets.length; i++){
+			if(url && document.styleSheets[i].href.indexOf(url) == -1){
+				continue;
+			}
+
+			if(media){
+				// 规范化media字符串
+				media = media.replace(/,\s*/,',');
+				var sheetMedia;
+
+				if(document.styleSheets[i].media.mediaText){
+					// DOM方法
+					sheetMedia = document.styleSheets[i].media.mediaText.replace(/,\s*/,',');
+					// Safari会添加额外的逗号和空格
+					// 把以上处理好的sheetMedia再加工去掉额外的
+					sheetMedia = sheetMedia.replace(/,\s*$/,'');
+				} else {
+					// IE方法
+					sheetMedia = document.styleSheets[i].media.replace(/,\s*/,',');
+				}
+
+				// 如果指定的media
+				// 与加工处理的sheetMedia不匹配的话
+				// 则中断循环
+				if(media != sheetMedia) continue;
+			}
+
+			sheets.push(document.styleSheets[i]);
+		}
+		return sheets;
+	}
+	window['ADS']['getStyleSheets'] = getStyleSheets;
+
+	// 移除样式表
+	function removeStyleSheet(url, media){
+		var styles = getStyleSheets(url, media);
+		for(var i = 0; i < styles.length; i++){
+			var node = styles[i].ownerNode || styles[i].owningElement;
+			// 禁用样式表
+			styles[i].disabled = true;
+			// 移除节点
+			node.parentNode.removeChild(node);
+		}
+	}
+	window['ADS']['removeStyleSheet'] = removeStyleSheet;
+
+	// 编辑一条样式规则
+	function editCSSRule(selector, styles, url, media){
+		var styleSheets = (typeof url == 'array' ? url : getStyleSheets(url, media));
+		for(var i = 0; i < styleSheets.length; i++){
+			// 取得规则列表
+			// DOM2样式规范方法是styleSheets[i].cssRules
+			// IE方法是styleSheets[i].rules
+			var rules = styleSheets[i].cssRules || styleSheets[i].rules;
+			if(!rules) {continue};
+
+			// IE默认使用大写
+			selector = selector.toUpperCase();
+
+			for(var j = 0; j < rules.length; j++){
+				// 检查是否匹配
+				if(rules[j].selectorText.toUpperCase() == selector){
+					for(property in styles){
+						if(!styles.hasOwnProperty(property)) {continue};
+						// 设置新样式属性
+						rules[j].style[camelize(property)] = rules[j].style[property];
+					}
+				}
+			}
+		}
+	}
+	window['ADS']['editCSSRule'] = editCSSRule;
+
 })();
