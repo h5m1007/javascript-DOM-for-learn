@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Manipulating CSS Rules</title>
+	<link rel="stylesheet" href="../shared/source.css">
+	<script src="../ADS.js"></script>
+	<style>
+		a{
+			font-weight: normal;
+		}
+
+		a:link{
+			text-decoration: underline;
+			color: black;
+		}
+
+		a:visited{
+			text-decoration: none;
+		}
+
+		a:hover{
+			color: #248030;
+			text-decoration: none;
+		}
+
+		p{
+			line-height: 1.5em;
+		}
+	</style>
+</head>
+<body>
+	<h1>Manipulating CSS Rules</h1>
+	<div id="content">
+		<p>
+			<a href="##" title="Go to xxx.com">Lorem ipsum</a>
+			dolor sit amet, consectetuer adipiscing elit.
+			<a href="##" title="Go to xxx.com">Lorem ipsum</a>
+			dolor sit amet, consectetuer adipiscing elit.
+			<a href="##" title="Go to xxx.com">Lorem ipsum</a>
+			dolor sit amet, consectetuer adipiscing elit.
+			<a href="##" title="Go to xxx.com">Lorem ipsum</a>
+			dolor sit amet, consectetuer adipiscing elit.
+		</p>
+	</div>
+
+	<script>
+		ADS.addEvent(window, 'load', function(){
+			ADS.editCSSRule(
+				'a:link',
+				{
+					'text-decoration' : 'none'
+				}
+			);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Add and remove stylesheets</title>
+	<link rel="stylesheet" href="../shared/source.css">
+	<link rel="stylesheet" href="green.css" media="screen">
+	<script src="../ADS.js"></script>
+</head>
+<body>
+	<h1>Add and Remove Style Sheets</h1>
+	<div id="content">
+		<h2>Test</h2>
+		<p>All this text should end up black on a pink background</p>
+	</div>
+
+	<script>
+		(function(){
+			ADS.addEvent(window, 'load', function(){
+				ADS.addStyleSheet('pink.css', 'screen');
+				ADS.removeStyleSheet('green.css', 'screen');
+			});
+		})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>className Modification</title>
+	<link rel="stylesheet" href="../shared/source.css">
+	<script src="../ADS.js"></script>
+	<script src="../chapter2/myLogger.js"></script>
+</head>
+<body>
+	<h1>className Modification</h1>
+	<div id="content">
+		<div id="test" class="testClass">
+			test element
+		</div>
+	</div>
+
+	<script>
+		ADS.addEvent(window, 'load', function(){
+			testEle = ADS.$('test');
+
+			ADS.log.write(
+				'assigned classes: '
+				+ ADS.getClassName(testEle)
+			);
+
+			ADS.addClassName(testEle, 'newClass');
+			ADS.log.write('added newClass');
+
+			ADS.log.write('has newClass? ' + ADS.hasClassName(testEle, 'newClass'));
+			ADS.log.write('now has classes: ' + ADS.getClassName(testEle));
+
+			ADS.removeClassName(testEle, 'newClass');
+			ADS.log.write('remove newClass');
+			ADS.log.write('now has classes: ' + ADS.getClassName(testEle));
+
+			
+		});
+	</script>
+</body>
+</html>

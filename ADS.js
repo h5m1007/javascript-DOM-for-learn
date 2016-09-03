@@ -678,7 +678,7 @@ if(!String.trim){
 	}
 	window['ADS']['removeStyleSheet'] = removeStyleSheet;
 
-	// 编辑一条样式规则
+	// 修改已有样式规则
 	function editCSSRule(selector, styles, url, media){
 		var styleSheets = (typeof url == 'array' ? url : getStyleSheets(url, media));
 		for(var i = 0; i < styleSheets.length; i++){
@@ -695,7 +695,11 @@ if(!String.trim){
 				// 检查是否匹配
 				if(rules[j].selectorText.toUpperCase() == selector){
 					for(property in styles){
-						if(!styles.hasOwnProperty(property)) {continue};
+						if(!styles.hasOwnProperty(property)) {
+							// 参数样式表中没有该属性
+							// 则中断循环
+							continue;
+						}
 						// 设置新样式属性
 						rules[j].style[camelize(property)] = rules[j].style[property];
 					}
@@ -704,5 +708,43 @@ if(!String.trim){
 		}
 	}
 	window['ADS']['editCSSRule'] = editCSSRule;
+
+	// 添加一条规则
+	function addCSSRule(selector, styles, index, url, media){
+		var declaration = '';
+
+		// 根据styles参数构建声明字符串
+		for(property in styles){
+			if(!styles.hasOwnProperty(property)){
+				continue;
+			}
+			declaration += property + ':' + styles[property] + '; ';
+		}
+
+		var styleSheets = (typeof url == 'array' ? url : getStyleSheets(url, media));
+		var newIndex;
+		for(var i = 0; i < styleSheets.length; i++){
+			// 添加规则
+			if(styleSheets[i].insertRule){
+				// DOM2样式规范方法
+				// 当index = length表示位于列表末尾
+				newIndex = (index >= 0 ? index : styleSheets[i].cssRules.length);
+				styleSheets[i].insertRule(
+					selector + ' { ' + declaration + ' } ',
+					newIndex
+				);
+			} else if(styleSheets[i].addRule){
+				// IE方法
+				// index = -1 表示在列表末尾
+				newIndex = (index > 0 ? index : -1);
+				styleSheets[i].addRule(
+					selector,
+					declaration,
+					newIndex
+				);
+			}
+		}
+	}
+	window['ADS']['addCSSRule'] = addCSSRule;
 
 })();

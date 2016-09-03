@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>through id classname tagname set style</title>
+	<link rel="stylesheet" href="../shared/source.css">
+	<script src="../ADS.js"></script>
+</head>
+<body>
+	<h1>ADS.setStyle* Test Page</h1>
+	<div id="content">
+		<div id="test" class="testClass">
+			test element
+		</div>
+
+		<ul id="unorderedList">
+			<li>by tag</li>
+			<li>by tag</li>
+			<li class="findme">by tag then by class</li>
+		</ul>
+	</div>
+
+	<script>
+		ADS.addEvent(window, 'load', function(){
+			ADS.setStyleById('test', {
+				'background-color': 'green',
+				'border': '2px solid black',
+				'color': 'white',
+				'display': 'inline'
+			});
+
+			ADS.setStylesByTagName(
+				'li',
+				{
+					'background-color' : 'gray',
+					'border': '2px solid black',
+					'color': 'white',
+					'display': 'inline'
+				},
+				'unorderedList'
+			);
+
+			ADS.setStylesByClassName(
+				'unorderedList',
+				'*',
+				'findme',
+				{'background-color': 'red'}
+			);
+
+		});
+	</script>
+</body>
+</html>
