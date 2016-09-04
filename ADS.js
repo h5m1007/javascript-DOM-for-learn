@@ -701,7 +701,7 @@ if(!String.trim){
 							continue;
 						}
 						// 设置新样式属性
-						rules[j].style[camelize(property)] = rules[j].style[property];
+						rules[j].style[camelize(property)] = styles[property];
 					}
 				}
 			}
