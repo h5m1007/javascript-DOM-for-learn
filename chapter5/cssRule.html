@@ -52,6 +52,18 @@
 					'font-weight' : 'bold'
 				}
 			);
+
+			if(document.styleSheets[1].cssRules){
+				ADS.addCSSRule(
+					'a[href]:after',
+					{
+						'content': '" (" attr(href) ") "',
+						'font-size': '.9em',
+						'color': '#16009b'
+					},
+					5
+				);
+			}
 		});
 	</script>
 </body>
