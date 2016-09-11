@@ -1,0 +1,20 @@
+/* 图像被禁用时为文本添加的样式 */
+#advancedHeader{
+	color: #1A5B9D;
+}
+
+/* 根据图像设置标题大小 */
+#advancedHeader.advancED{
+	height: 60px;
+	position: relative;
+	overflow: hidden;
+}
+
+/* 使用不透明图像隐藏文本 */
+#advancedHeader.advancED span{
+	background: white url('../image/ADS.png') no-repeat;
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
