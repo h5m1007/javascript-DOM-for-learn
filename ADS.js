@@ -747,4 +747,32 @@ if(!String.trim){
 	}
 	window['ADS']['addCSSRule'] = addCSSRule;
 
+	// 取得某元素已存在的行内样式值
+	// 或在样式表中的样式值
+	function getStyle(element, property){
+		if(!(element = $(element)) || !property) return false;
+
+		// 试着从行内获取对应的样式值
+		var value = element.style[camelize(property)];
+
+		// 如果行内不存在该样式
+		// 那就调用document.defaultView.getComputedStyle(ele)
+		// 或在IE下使用element.currentStyle.property
+		// 获取样式表中对应的样式值
+		if(!value){
+			if(document.defaultView && document.defaultView.getComputedStyle){
+				// DOM方式
+				var css = document.defaultView.getComputedStyle(element, null);
+				value = css ? css.getPropertyValue(property) : null;
+			} else if(element.currentStyle){
+				// IE方式
+				value = element.currentStyle[camelize(property)];
+			}
+		}
+
+		return value == 'auto' ? '' : value;
+	}
+	window['ADS']['getStyle'] = getStyle;
+	window['ADS']['getStyleById'] = getStyle;
+
 })();

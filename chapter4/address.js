@@ -62,12 +62,47 @@ ADS.addEvent(window, 'load', function(){
 
 				if(ADS.$('street').value == ''){
 					ADS.$('street').value = street;
+
+					// 由chapter5引入fadeColor()
+					// 开启渐变效果
+					fadeColor(
+						{r:0, g:255, b:0},
+						{r:255, g:255, b:255},
+						function(color){
+							ADS.setStyle(
+								'street',
+								{'background-color': color}
+							);
+						}
+					);
 				}
 				if(ADS.$('city').value == ''){
 					ADS.$('city').value = city;
+
+					fadeColor(
+						{r:0, g:255, b:0},
+						{r:255, g:255, b:255},
+						function(color){
+							ADS.setStyle(
+								'city',
+								{'background-color': color}
+							);
+						}
+					);
 				}
 				if(ADS.$('province').value == ''){
 					ADS.$('province').value = province;
+
+					fadeColor(
+						{r:0, g:255, b:0},
+						{r:255, g:255, b:255},
+						function(color){
+							ADS.setStyle(
+								'province',
+								{'background-color': color}
+							);
+						}
+					);
 				}
 			}
 		}
