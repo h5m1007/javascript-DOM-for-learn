@@ -313,6 +313,7 @@ if(!String.trim){
 
 	// 取得事件对象
 	function getEventObject(e){
+		// window.event: IE8之前版本IE获得event方式
 		return e || window.event;
 	}
 	window['ADS']['getEventObject'] = getEventObject;
@@ -323,16 +324,23 @@ if(!String.trim){
 		if(eventObject.stopPropagation){
 			eventObject.stopPropagation();
 		} else{
+			// 在IE下
+			// 设e.cancelBubble为true
+			// 开启阻止事件冒泡
 			eventObject.cancelBubble = true;
 		}
 	}
 	window['ADS']['stopPropagation'] = stopPropagation;
 
+	// 阻止事件默认行为
 	function preventDefault(eventObject){
 		eventObject = eventObject || getEventObject(eventObject);
 		if(eventObject.preventDefault){
 			eventObject.preventDefault();
 		}else{
+			// 在IE下
+			// 设e.returnValue为false
+			// 开启阻止事件默认行为
 			eventObject.returnValue = false;
 		}
 	}
@@ -401,6 +409,8 @@ if(!String.trim){
 		eventObject = eventObject || getEventObject(eventObject);
 
 		// 如果是W3C标准模型或IE
+		// DOM2规范下 e.target获取事件作用的元素对象
+		// IE下 e.srcElement获取事件作用的元素对象
 		var target = eventObject.target || eventObject.srcElement;
 
 		// 如果是Safari中，它的目标对象为文本节点
