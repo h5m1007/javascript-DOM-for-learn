@@ -236,6 +236,7 @@ if(!String.trim){
 	window['ADS']['getBrowserWindowSize'] = getBrowserWindowSize;
 
 	// DOM常量
+	// 节点类型nodeType = 1表示 ELEMENT_NODE
 	window['ADS']['node'] = {
 		ELEMENT_NODE	            : 1,
 		ATTRIBUTE_NODE	            : 2,
@@ -362,12 +363,15 @@ if(!String.trim){
 		// 使得this指向正确的内容且确保事件不会被执行两遍
 		var init = function(){
 			// 如果这个函数已经被调用过则返回
+			// arguments.callee 指向该函数本身
 			if(arguments.callee.done) return;
 
 			// 标记这个函数以便检验它是否运行过
 			arguments.callee.done = true;
 
 			// 在document环境中运行载入事件
+			// 这里的arguments
+			// 指向loadEvent方法的未知参数表
 			loadEvent.apply(document, arguments);
 		};
 
