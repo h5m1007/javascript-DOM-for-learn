@@ -1,1 +1,4 @@
-"# javascriptDom for learn" 
+javascript DOM 高级程序设计 前5章手打代码 每段代码附有自己理解注释 纯手工操作 请支持
+
+## 第一章
+- 
